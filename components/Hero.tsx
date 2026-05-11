@@ -52,11 +52,10 @@ export default function Hero() {
         </button>
 
         <a
-          href="/resume/resume.pdf"
-          download
-          className="border border-white hover:bg-white hover:text-black transition px-6 py-3 rounded-xl font-semibold"
-        >
-          Download Resume
+            href="/resume.pdf"
+            download
+            className="border border-white px-8 py-4 rounded-2xl hover:bg-white hover:text-black transition">
+            Download Resume
         </a>
       </motion.div>
 
