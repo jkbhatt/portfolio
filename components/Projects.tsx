@@ -1,143 +1,125 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import Image from "next/image";
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  github: string;
+  live: string;
+}
 
-const projects = [
+const projects: Project[] = [
   {
     title: "LeetCode Clone",
-
     description:
       "Full-stack coding platform with authentication, coding problems, leaderboard system, and responsive dashboard UI.",
-
-    image: "/projects/leetcode.png",
-
-    tech: [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "Express",
-      "Tailwind CSS",
-    ],
-
-    github: "https://github.com/jkbhatt",
+    image: "/leetcode-preview.png",
+    tags: ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
+    github: "https://github.com/jkbhatt/leetcode-clone",
     live: "https://leetcode-clone-black.vercel.app/",
   },
-
   {
     title: "ProjectFlow",
-
     description:
       "Modern task management application with dashboard system, protected routes, and API integration.",
-
-    image: "/projects/projectflow.png",
-
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "MongoDB",
-      "JWT Auth",
-    ],
-
-    github: "https://github.com/jkbhatt",
-    live: "#",
+    image: "/projectflow-preview.png",
+    tags: ["Next.js", "TypeScript", "MongoDB", "JWT Auth"],
+    github: "https://github.com/jkbhatt/projectflow",
+    live: "https://projectflow-pi-opal.vercel.app",
   },
-
   {
     title: "Portfolio Website",
-
     description:
       "Animated developer portfolio with glassmorphism UI and smooth interactions.",
-
-    image: "/projects/portfolio.png",
-
-    tech: [
-      "Next.js",
-      "Tailwind CSS",
-      "Framer Motion",
-    ],
-
-    github: "https://github.com/jkbhatt",
-    live: "#",
+    image: "/portfolio-preview.png",
+    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    github: "https://github.com/jkbhatt/portfolio",
+    live: "https://portfolio-one-livid-55.vercel.app/",
   },
 ];
 
 export default function Projects() {
   return (
-    <section
-      id="projects"
-      className="py-24 px-6 max-w-7xl mx-auto"
-    >
-      <motion.h2
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-4xl md:text-5xl font-bold text-center mb-16"
-      >
-        Featured <span className="text-purple-500">Projects</span>
-      </motion.h2>
+    <section id="projects" className="py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            My <span className="text-purple-400">Projects</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Here are some of the projects I&apos;ve built
+          </p>
+          <div className="w-20 h-1 bg-purple-500 mx-auto mt-4 rounded-full" />
+        </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 }}
-            whileHover={{ y: -10 }}
-            className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-lg hover:border-purple-500 transition duration-300"
-          >
-            <div className="relative h-56 overflow-hidden">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover hover:scale-110 transition duration-500"
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project) => (
+            <div
+              key={project.title}
+              className="bg-gray-800/60 border border-gray-700 rounded-2xl overflow-hidden hover:border-purple-500 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/10 flex flex-col"
+            >
+              {/* Project Image */}
+              <div className="relative h-48 w-full overflow-hidden bg-gray-700">
+                <img
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                  onError={(e) => {
+                    // Fallback if image not found
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `<div class="w-full h-full flex items-center justify-center text-purple-400 text-4xl font-bold">${project.title[0]}</div>`;
+                    }
+                  }}
+                />
+              </div>
 
-            <div className="p-6">
-              <h3 className="text-2xl font-bold mb-4">
-                {project.title}
-              </h3>
+              {/* Card Content */}
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-white text-xl font-bold mb-2">{project.title}</h3>
+                <p className="text-gray-400 text-sm mb-4 flex-1">{project.description}</p>
 
-              <p className="text-gray-300 mb-6">
-                {project.description}
-              </p>
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="bg-purple-900/50 text-purple-300 text-xs px-3 py-1 rounded-full border border-purple-700/50"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
 
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tech.map((item, i) => (
-                  <span
-                    key={i}
-                    className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm"
+                {/* Buttons */}
+                <div className="flex gap-3">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center border border-gray-600 hover:border-purple-400 text-gray-300 hover:text-white text-sm font-medium py-2 px-4 rounded-lg transition-all duration-300"
                   >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-4">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  className="border border-white/20 px-4 py-2 rounded-xl hover:bg-white hover:text-black transition"
-                >
-                  GitHub
-                </a>
-
-                <a
-                  href={project.live}
-                  target="_blank"
-                  className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-xl transition"
-                >
-                  <ExternalLink size={18} />
-                  Live
-                </a>
+                    GitHub
+                  </a>
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-1"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Live
+                  </a>
+                </div>
               </div>
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
