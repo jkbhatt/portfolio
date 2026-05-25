@@ -34,11 +34,8 @@ export default function Hero() {
   };
 
   const handleDownloadResume = () => {
-    // Google Drive direct download link
-    const fileId = "1xoVkhKDmP_MDS9TDAibCBMKaMWiwtWUy";
-    const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
     const link = document.createElement("a");
-    link.href = downloadUrl;
+    link.href = "/resume/Resume.pdf";
     link.download = "Jay_Bhatt_Resume.pdf";
     document.body.appendChild(link);
     link.click();
